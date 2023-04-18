@@ -14,7 +14,7 @@ class Bicicleta:
     
     def parar(self):
         print("Parando...")
-        print("Bicileta Parada")
+        print("Bicicleta Parando")
 
     def correr(self):
         print("Correndo... Vrummm....")
@@ -25,5 +25,9 @@ class Bicicleta:
 
 b1 = Bicicleta("Vermelha", "Caloi", 2022, 600, 18)
 
-print(b1)
+b2 = Bicicleta("Vermelha", "Caloi", 2022, 600, 18)
+b2.parar()
+print(b2)
+
+#print(b1)
 

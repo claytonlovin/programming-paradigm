@@ -1,3 +1,4 @@
+from datetime import datetime
 
 class Pessoa:
     def __init__(self, nome, data_nascimento, cpf):
@@ -9,7 +10,6 @@ class Contato:
     def __init__(self, telefone, email):
         self.telefone = telefone
         self.email = email
-
 
 class Medico(Pessoa, Contato):
     def __init__(self, nome, data_nascimento, cpf, telefone, email, crm):
@@ -59,7 +59,31 @@ class Consulta:
         self.medicamento = medicamento
         self.data = data
         self.data_retorno = data_retorno
-        
+        self.cancelada = False
+        self.motivo_cancelamento = None
+
+    def editar_consulta(self, medico=None, paciente=None, medicamento=None, data=None, data_retorno=None):
+        if not self.cancelada and datetime.strptime(self.data_retorno, '%d/%m/%Y') >= datetime.now():
+            if medico:
+                self.medico = medico
+            if paciente:
+                self.paciente = paciente
+            if medicamento:
+                self.medicamento = medicamento
+            if data:
+                self.data = data
+            if data_retorno:
+                self.data_retorno = data_retorno
+        else:
+            print(f"Não é possível editar essa consulta pois ela já ocorreu em: {self.data_retorno}")
+            
+    def cancelar_consulta(self, motivo):
+        if not self.cancelada and datetime.strptime(self.data_retorno, '%d/%m/%Y') >= datetime.now():
+            self.cancelada = True
+            self.motivo_cancelamento = motivo
+        else:
+            self.motivo_cancelamento = "Não é possível cancelar esta consulta."
+            
     def __str__(self):
         return f"""
         Médico: {self.medico} - 
@@ -67,6 +91,8 @@ class Consulta:
         Data da Consulta: {self.data} - 
         Data de Retorno: {self.data_retorno} - 
         Medicamentos: {self.medicamento}
+        Cancelada: {self.cancelada} -
+        Motivo do cancelamento: {self.motivo_cancelamento}
         """
 
 #print(r.imprimir())
